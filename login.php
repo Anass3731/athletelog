@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    // Comprobamos usuario y contraseña con el hash de $users (data.php).
+    // Comprobamos usuario y contraseña con el hash de $users que hay en data.php.
     if (isset($users[$username]) && password_verify($password, $users[$username]['password_hash'])) {
         // Cambiamos el id de sesión al autenticarse (evita fijación de sesión).
         session_regenerate_id(true);

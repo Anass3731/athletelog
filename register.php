@@ -4,7 +4,16 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/includes/bootstrap.php';
 
+
+
 $pageTitle = 'Registro';
+
+const NOMBRE_MIN = 3;
+const NOMBRE_MAX = 50;
+const PASSWORD_MIN = 8;
+const EDAD_MIN = 16;
+const EDAD_MAX = 60;
+
 
 $days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
@@ -37,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $passwordRepeat = $_POST['password_repeat'] ?? '';
 
     // Validamos en el servidor, aunque el HTML ya tenga su propia validación.
-    if (strlen($name) < 3 || strlen($name) > 50) {
+    if (strlen($name) < NOMBRE_MIN  || strlen($name) > NOMBRE_MAX) {
         $errors['name'] = 'El nombre debe tener entre 3 y 50 caracteres.';
     }
 
@@ -49,14 +58,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['email'] = 'El email no es válido.';
     }
 
-    if (strlen($password) < 8) {
+    if (strlen($password) < PASSWORD_MIN) {
         $errors['password'] = 'La contraseña debe tener al menos 8 caracteres.';
     } elseif ($password !== $passwordRepeat) {
         $errors['password'] = 'Las dos contraseñas no son iguales.';
     }
 
     $ageNumber = filter_var($age, FILTER_VALIDATE_INT);
-    if ($ageNumber === false || $ageNumber < 16 || $ageNumber > 60) {
+    if ($ageNumber === false || $ageNumber < EDAD_MIN || $ageNumber > EDAD_MAX) {
         $errors['age'] = 'La edad debe estar entre 16 y 60 años.';
     }
 

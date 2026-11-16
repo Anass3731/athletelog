@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+//array indexando con aaray associativo
 // Deportes: clave => ['name', 'category', 'unit'].
 $sports = [
     'boxing'           => ['name' => 'Boxeo',            'category' => 'individual', 'unit' => 'rondas'],
@@ -12,6 +13,7 @@ $sports = [
     'karate'           => ['name' => 'Karate',           'category' => 'individual', 'unit' => 'minutos'],
     'football'         => ['name' => 'Fútbol',           'category' => 'equipo',     'unit' => 'minutos'],
 ];
+
 
 // Niveles competitivos: clave => texto que se ve.
 $levels = [
@@ -45,6 +47,7 @@ $users = [
 $themes = [
     'light' => 'Claro',
     'dark'  => 'Oscuro',
+    'pink'  => 'Rosa',
 ];
 
 $weightUnits = [
