@@ -32,6 +32,8 @@ $selectedDays = [];
 $accept = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrf();
+
     $name = trim($_POST['name'] ?? '');
     $username = trim($_POST['username'] ?? '');
     $email = trim($_POST['email'] ?? '');
@@ -127,6 +129,8 @@ require_once __DIR__ . '/includes/navbar.php';
     <?php endif; ?>
 
     <form action="register.php" method="POST" novalidate>
+
+        <?= csrfField() ?>
 
         <p>
             <label for="name">Nombre completo:</label>

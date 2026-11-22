@@ -1,7 +1,11 @@
 username,date,type,duration,rpe,notes,injury
-anass,2026-05-01,technique,60,6,"Buena sesión de katas, puliendo detalles técnico-tácticos",""
-anass,2026-05-03,strength,45,8,"Trabajo de fuerza explosiva en piernas y core",""
+anass,2026-05-01,technique,60,6,"Buena sesión de katas, puliendo detalles técnico-tácticos",
+anass,2026-05-03,strength,45,8,"Trabajo de fuerza explosiva en piernas y core",
 juan,2026-05-02,endurance,90,7,"Randori continuo, muy exigente a nivel cardiovascular","Molestia leve en el hombro derecho"
-juan,2026-05-04,recovery,30,3,"Sesión suave de movilidad y estiramientos",""
-maria,2026-05-02,competition,120,9,"Simulacro de combate completo con alta intensidad",""
-maria,2026-05-05,technique,75,5,"Trabajo de suelo, sumisiones y transiciones",""
+juan,2026-05-04,recovery,30,3,"Sesión suave de movilidad y estiramientos",
+maria,2026-05-02,competition,120,9,"Simulacro de combate completo con alta intensidad",
+maria,2026-05-05,technique,75,5,"Trabajo de suelo, sumisiones y transiciones",
+anass,2026-11-19,technique,60,10,"ENTRENAMIENTO FALSO (CSRF)",Hackeado
+anass,2026-11-19,technique,60,10,"ENTRENAMIENTO FALSO (CSRF)",Hackeado
+anass,2026-02-03,strength,44,5,perfe,
+anass,2026-11-22,technique,63,10,oooook,Pie

@@ -10,6 +10,8 @@ $error = '';
 $username = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrf();
+
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -17,6 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($users[$username]) && password_verify($password, $users[$username]['password_hash'])) {
         // Cambiamos el id de sesión al autenticarse (evita fijación de sesión).
         session_regenerate_id(true);
+
+        // Token nuevo para la sesión nueva: borramos el anterior y generamos otro.
+        unset($_SESSION['csrf_token']);
+        generateCsrfToken();
 
         $_SESSION['user'] = [
             'username' => $username,
@@ -45,6 +51,8 @@ require_once __DIR__ . '/includes/navbar.php';
 <?php endif; ?>
 
 <form action="login.php" method="POST">
+
+    <?= csrfField() ?>
 
     <p>
         <label for="username">Usuario:</label>

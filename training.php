@@ -19,12 +19,9 @@ $notes = '';
 $hasInjury = false;
 $injury = '';
 
-// Los entrenamientos se guardan de forma temporal en la sesión (array de arrays).
-if (!isset($_SESSION['trainings'])) {
-    $_SESSION['trainings'] = [];
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrf();
+
     $date = trim($_POST['date'] ?? '');
     $type = $_POST['type'] ?? '';
     $duration = trim($_POST['duration'] ?? '');
@@ -45,30 +42,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $errors = validateTraining($input, $trainingTypes);
 
-    // Si no hay errores, construimos el entrenamiento como array asociativo.
+    // Si no hay errores, guardamos el entrenamiento al final del CSV.
     if (count($errors) === 0) {
         $injuryText = '';
         if ($hasInjury) {
             $injuryText = $injury;
         }
 
-        $_SESSION['trainings'][] = [
-            'date'     => $date,
-            'type'     => $type,
-            'duration' => (int) $duration,
-            'rpe'      => (int) $rpe,
-            'notes'    => $notes,
-            'injury'   => $injuryText,
+        // El orden tiene que ser el de la cabecera del CSV.
+        $training = [
+            $_SESSION['user']['username'],
+            $date,
+            $type,
+            (int) $duration,
+            (int) $rpe,
+            $notes,
+            $injuryText,
         ];
 
-        // Recargamos para vaciar el formulario y que F5 no lo reenvíe.
-        header('Location: training.php');
-        exit();
+        if (saveTraining(TRAININGS_FILE, $training)) {
+            // Vamos al historial para ver el entrenamiento y que F5 no lo reenvíe.
+            header('Location: history.php');
+            exit();
+        }
+
+        $errors['file'] = 'No hemos podido guardar el entrenamiento. Inténtalo de nuevo más tarde.';
     }
 }
-
-$trainings = $_SESSION['trainings'];
-$stats = getTrainingStats($trainings);
 
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/navbar.php';
@@ -88,6 +88,8 @@ require_once __DIR__ . '/includes/navbar.php';
 <?php endif; ?>
 
 <form action="training.php" method="POST" novalidate>
+
+    <?= csrfField() ?>
 
     <p>
         <label for="date">Fecha:</label>
@@ -143,55 +145,6 @@ require_once __DIR__ . '/includes/navbar.php';
     <button type="submit">Guardar entrenamiento</button>
 
 </form>
-
-<h2>Entrenamientos registrados</h2>
-
-<?php if ($stats['sessions'] === 0): ?>
-
-    <p>Todavía no has registrado ningún entrenamiento.</p>
-
-<?php else: ?>
-
-    <table>
-        <tr>
-            <th>Fecha</th>
-            <th>Tipo</th>
-            <th>Duración (min)</th>
-            <th>RPE</th>
-            <th>Carga</th>
-            <th>Sensaciones</th>
-            <th>Lesión</th>
-        </tr>
-
-        <?php foreach ($trainings as $training): ?>
-            <?php
-            $injuryShown = 'No';
-            if ($training['injury'] !== '') {
-                $injuryShown = $training['injury'];
-            }
-            ?>
-            <tr>
-                <td><?= e($training['date']) ?></td>
-                <td><?= e($trainingTypes[$training['type']]) ?></td>
-                <td><?= e($training['duration']) ?></td>
-                <td><?= e($training['rpe']) ?></td>
-                <td><?= e(calculateLoad($training['duration'], $training['rpe'])) ?></td>
-                <td><?= e($training['notes']) ?></td>
-                <td><?= e($injuryShown) ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
-
-    <h2>Estadísticas</h2>
-
-    <ul>
-        <li>Total de sesiones: <?= e($stats['sessions']) ?></li>
-        <li>Minutos totales: <?= e($stats['minutes']) ?></li>
-        <li>RPE medio: <?= e($stats['average_rpe']) ?></li>
-        <li>Carga total: <?= e($stats['load']) ?></li>
-    </ul>
-
-<?php endif; ?>
 
 <?php
 require_once __DIR__ . '/includes/footer.php';

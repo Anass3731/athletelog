@@ -17,6 +17,8 @@ $weightUnit = $preferences['weight_unit'];
 $tips = $preferences['tips'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    requireCsrf();
+
 
     // Botón "Restablecer": borramos las cookies poniendo su caducidad en el pasado.
     if (isset($_POST['reset'])) {
@@ -75,6 +77,8 @@ require_once __DIR__ . '/includes/navbar.php';
 <?php endif; ?>
 
 <form action="preferences.php" method="POST">
+
+    <?= csrfField() ?>
 
     <p>Tema:</p>
 
