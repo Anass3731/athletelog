@@ -383,3 +383,25 @@ function requireCsrf(): void
         exit();
     }
 }
+
+
+function readUsers (string $file): array {
+
+    if (!is_file($file) || !is_readable($file)) {
+        return [];
+    }
+
+    $fichero = fopen ($file, 'r');
+    if ($fichero === false) {
+        return [];
+    }
+
+    $cabecera = fgetcsv($fichero, null, ',', '"', '');
+
+    $usuarios[];
+
+    while ($fila = fgetcsv($fichero, null, '')) {
+        # code...
+    }
+    return $usuarios;
+}

@@ -92,6 +92,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (count($errors) === 0) {
         $success = true;
     }
+
+
+    //guardo el usuraio nuevo en el archivo csv
+    $newUser= [
+        'username' => $username,
+        'name' => $name,
+        'password_hash' => password_hash($password, PASSWORD_DEFAULT),
+        'sport' => $sport
+    ];
+
+    
+    $usersFile = __DIR__ . '/data/users.csv';
+
+    $handle = fopen($usersFile, 'a');
+
+    if ($handle !== false) {
+        if (fputcsv($handle, $newUser) !== false) {
+            $succes = true;
+        } 
+    } else {
+    $errors['general'] = 'No se ha podido guardar el usuario.';
+    }
+    fclose($handle);
+
 }
 
 require_once __DIR__ . '/includes/header.php';

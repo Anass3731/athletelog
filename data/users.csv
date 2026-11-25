@@ -1,0 +1,5 @@
+username, name,password_hash,sport
+anass,Anass,"$2y$10$OPAWG8IvQTSfCp/sx6DNruxbcGMywv4I/i7JLZQS/3TryKmedK..m",karate
+juan,Juan,"$2y$10$boUGE2elg86HtANc3ZWSvueE7SBIRp2h3g3GILlclE2Wetl5L1OYG",judo
+maria,María,"$2y$10$WEeeluKjHhM6bGNDv8a70.oo0xSK3n4WnAfgGDFHF3Hmx1e0eElKC",mma
+Pepe,Pepe,$2y$10$FCs9VNu6OvAoO64qEwQVqu.dHq4u3H2xi4CUBDdMolkaBzx9dmSo.,karate

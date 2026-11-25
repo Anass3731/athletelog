@@ -30,3 +30,6 @@ const TRAININGS_FILE = __DIR__ . '/../data/trainings.csv';
 
 // Cabecera del CSV: el orden de las columnas.
 const TRAININGS_HEADER = ['username', 'date', 'type', 'duration', 'rpe', 'notes', 'injury'];
+
+
+const USERS_FILE = __DIR__ . '/../data/users.csv';
